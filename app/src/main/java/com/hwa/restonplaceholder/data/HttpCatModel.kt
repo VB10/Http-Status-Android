@@ -10,3 +10,4 @@ data class HttpCatModel(
     @SerializedName("statusCode")
     val statusCode: Int = 0
 )
+

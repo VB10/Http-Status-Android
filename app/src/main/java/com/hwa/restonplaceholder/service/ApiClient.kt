@@ -16,8 +16,13 @@ object ApiClient {
             val gson = GsonBuilder()
                 .setLenient().create()
             val client = OkHttpClient.Builder().build()
-            val retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson)).build()
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+
+
             return retrofit.create(IApiHttpCat::class.java)
         }
 }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hwa.restonplaceholder.data.HttpCatModel
 import com.hwa.restonplaceholder.service.ApiClient
 import com.hwa.restonplaceholder.ui.DataAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,20 +16,19 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
     var dataList = ArrayList<HttpCatModel>()
-    lateinit var recylerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recylerView = findViewById(R.id.recyler_view)
-
-        recylerView.adapter = DataAdapter(dataList, this)
-        recylerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyler_view.adapter = DataAdapter(dataList)
+        recyler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         getData()
+
     }
 
-    fun getData() {
+    private fun getData() {
+
         val call: Call<List<HttpCatModel>> = ApiClient.getClient.getHttpCatList()
         call.enqueue(object : Callback<List<HttpCatModel>> {
             override fun onFailure(call: Call<List<HttpCatModel>>?, t: Throwable?) {
@@ -41,9 +41,9 @@ class MainActivity : AppCompatActivity() {
             ) {
                 if (response != null) {
                     dataList.addAll(response.body())
-                    recylerView.adapter?.notifyDataSetChanged()
+                    recyler_view.adapter?.notifyDataSetChanged()
+                    Toast.makeText(this@MainActivity,"Basarili",Toast.LENGTH_SHORT).show()
                 }
-
             }
 
         })
